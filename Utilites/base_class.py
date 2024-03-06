@@ -56,4 +56,3 @@ class Base_Class:
 
     def clear(self, by_locator):
         self.wait.until((EC.visibility_of_element_located(by_locator))).clear()
-
