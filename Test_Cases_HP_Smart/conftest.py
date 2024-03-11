@@ -15,7 +15,9 @@ def setup(request):
     driver = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
     driver.implicitly_wait(30)
     driver.maximize_window()
-    time.sleep(10)
+    time.sleep(30)
     request.cls.driver = driver
-    yield
-    driver.quit()
+
+    # yield
+    # driver.quit()
+    return driver
