@@ -34,8 +34,10 @@ class HP_Smart_Test(Base_Class):
             self.wait_for_Property(E_Locator.App_Setting_Name)
             print("HP Smart Home Screen is present")
             self.wait_for_Property(E_Locator.Manage_HP_Account_Name)
-            self.click(E_Locator.Manage_HP_Account_Name)  # <----------
-            self.click(E_Locator.Sign_In_Name)
+            # self.click(E_Locator.Manage_HP_Account_Name)
+            # self.click(E_Locator.Sign_In_Name)
+            self.click_element(E_Locator.Manage_HP_Account_Name, 40)
+            self.click_element(E_Locator.Sign_In_Name, 40)  # <-------
             time.sleep(20)
             # keyboard.press(Key.esc)
             # time.sleep(2)
@@ -52,9 +54,8 @@ class HP_Smart_Test(Base_Class):
                 # self.wait_for_Property(E_Locator.Next)
                 # self.click(E_Locator.Next)
                 self.wait_for_Property(E_Locator.Next_xpath)
+                time.sleep(5)
                 self.click(E_Locator.Next_xpath)
-                # click_element("Next", AppiumBy.NAME, 50)
-                print("After-next2")
             except Exception as e:
                 # keyboard.press(Key.tab)
                 # time.sleep(2)
@@ -62,11 +63,15 @@ class HP_Smart_Test(Base_Class):
                 time.sleep(2)
                 keyboard.press(Key.enter)
             time.sleep(3)
+            # self.i_frame(E_Locator.i_frame_ID)
             # keyboard.type(data_variables["email_password"])
-            # keyboard.type(get_data_from_inputs("email_password"))
-            self.send_keys(E_Locator.password_xpath, get_data_from_inputs("email_password"))
+            keyboard.type(get_data_from_inputs("email_password"))
+            # self.clear(E_Locator.password_xpath)
+            # self.send_keys(E_Locator.password_xpath, get_data_from_inputs("email_password"))
+            # self.send_keys_json(E_Locator.signin_Xpath, "email_password")
             time.sleep(1)
             keyboard.press(Key.enter)
+            # self.click_element(E_Locator.signin_Xpath, 20)
             time.sleep(15)
             keyboard.press(Key.left)
             time.sleep(5)
@@ -107,8 +112,9 @@ class HP_Smart_Test(Base_Class):
             self.click(E_Locator.App_Setting_Name)
             if self.wait_for_Property(E_Locator.Sign_Out_Name):
                 self.click(E_Locator.Sign_Out_Name)
-                time.sleep(10)
-            self.click(E_Locator.Back_arrow_ID)
+                time.sleep(5)
+                self.click_element(E_Locator.Sign_Out_Name, 20)
+            # self.click(E_Locator.Back_arrow_ID)
         except Exception as ee:
             message = f"Element is not clicked ==> {str(E_Locator)}"
             raise ElementNotClicked(message)

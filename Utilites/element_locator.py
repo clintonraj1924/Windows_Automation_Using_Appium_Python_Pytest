@@ -15,6 +15,7 @@ class E_Locator:
     Next_xpath = (By.XPATH, '//*[@id="user-name-form-submit"]')
     userName_xpath = (By.XPATH, '//*[@id="username"]')
     password_xpath = (By.XPATH, '//*[@id="password"]')
+    signin_Xpath = (By.XPATH, '//*[@id="sign-in"]')
     v_name = (AppiumBy.NAME, "")
     IP_address_Or_host_Name = (AppiumBy.NAME, "IP address or hostname")
     Printer_ip_Name = (AppiumBy.NAME, "printer_ip")
@@ -26,5 +27,6 @@ class E_Locator:
     Close_Setting = (AppiumBy.NAME, "Close Settings")
     Firmware_update = (AppiumBy.NAME, "Firmware Update Available")
     No_Name = (AppiumBy.NAME, "No")
+    i_frame_ID = "tag-manager"
 
 

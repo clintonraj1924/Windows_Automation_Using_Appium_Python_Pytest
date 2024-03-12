@@ -30,6 +30,10 @@ class Base_Class:
     def click(self, by_locator):
         self.wait.until(EC.presence_of_element_located(by_locator)).click()
 
+    def click_element(self, by_element, timeout):
+        WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(by_element)).click()
+        # self.driver.find_element(by_element).click()
+
     def i_frame(self, locator):
         self.driver.switch_to.frame(locator)
 
@@ -74,7 +78,10 @@ class Base_Class:
             return None
 
     def clear(self, by_locator):
-        self.wait.until((EC.visibility_of_element_located(by_locator))).clear()
+        try:
+            self.wait.until((EC.visibility_of_element_located(by_locator))).clear()
+        except Exception as ee:
+            pass
 
     '''def wait_for_object(self, locator, timeout=None):
         self.log_my_keyword_name_and_arguments()
@@ -213,7 +220,5 @@ class Base_Class:
         element = self.find_element(by_locator)
         return element
 
-    def click_element(self, by_element, timeout):
-        WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(by_element))
-        self.driver.find_element(by_element).click()
+
 
