@@ -1,22 +1,29 @@
-import subprocess
-import time
 import os
 import psutil
+import time
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 from pynput.keyboard import Key, Controller
 from Utilites.base_class import Base_Class
-from Utilites.base_class import get_data_from_inputs
+from Page_Object.basic_actions import *
 from Utilites.element_locator import E_Locator
 from Utilites.exception_handling import *
 
 keyboard = Controller()
 
+# # Set the desired capability for HP Smart App
+# desired_caps = {'app': "AD2F1837.HPPrinterControl_v10z8vjag6ke6!AD2F1837.HPPrinterControl",
+#                 'platformName': "Windows",
+#                 'platformVersion': "10", 'deviceName': "WindowsPC", "ms:experimental-webdriver": True,
+#                 "ms:waitForAppLaunch": "50"}
 # Set the desired capability for HP Smart App
-desired_caps = {'app': "AD2F1837.HPPrinterControl_v10z8vjag6ke6!AD2F1837.HPPrinterControl",
-                'platformName': "Windows",
-                'platformVersion': "10", 'deviceName': "WindowsPC", "ms:experimental-webdriver": True,
-                "ms:waitForAppLaunch": "50"}
+desired_caps = {}
+desired_caps['app'] = "AD2F1837.HPPrinterControl_v10z8vjag6ke6!AD2F1837.HPPrinterControl"
+desired_caps['platformName'] = "Windows"
+desired_caps['platformVersion'] = "10"
+desired_caps['deviceName'] = "WindowsPC"
+desired_caps["ms:experimental-webdriver"] = True
+desired_caps["ms:waitForAppLaunch"] = "50"
 
 
 class HP_Smart_Test(Base_Class):
@@ -44,7 +51,7 @@ class HP_Smart_Test(Base_Class):
             # keyboard.press(Key.tab)
             # clearinput()
             # keyboard.type(data_variables["email_address"])
-            keyboard.type(get_data_from_inputs("email_address"))
+            keyboard.type(get_data_from_json("email_address"))
             time.sleep(2)
             keyboard.press(Key.tab)
             try:
@@ -65,7 +72,7 @@ class HP_Smart_Test(Base_Class):
             time.sleep(3)
             # self.i_frame(E_Locator.i_frame_ID)
             # keyboard.type(data_variables["email_password"])
-            keyboard.type(get_data_from_inputs("email_password"))
+            keyboard.type(get_data_from_json("email_password"))
             # self.clear(E_Locator.password_xpath)
             # self.send_keys(E_Locator.password_xpath, get_data_from_inputs("email_password"))
             # self.send_keys_json(E_Locator.signin_Xpath, "email_password")
@@ -140,7 +147,8 @@ class HP_Smart_Test(Base_Class):
                 if proc.name() == "HP.Smart.exe":
                     proc.kill()
             driver1 = webdriver.Remote(
-                command_executor='http://127.0.0.1:4723/wd/hub', )  # desired_capabilities=desired_caps
+                command_executor='http://127.0.0.1:4723/wd/hub',
+                desired_capabilities=desired_caps)  # desired_capabilities=desired_caps
 
             driver1.find_element(AppiumBy.NAME, "").click()
             time.sleep(5)
@@ -161,14 +169,14 @@ class HP_Smart_Test(Base_Class):
             try:
                 self.wait_for_Property(E_Locator.IP_address_Or_host_Name)
                 self.click(E_Locator.IP_address_Or_host_Name)
-                self.send_keys(E_Locator.IP_address_Or_host_Name, get_data_from_inputs("printer_ip"))
+                self.send_keys(E_Locator.IP_address_Or_host_Name, get_data_from_json("printer_ip"))
                 keyboard.press(Key.enter)
                 time.sleep(2)
             except Exception as e:
                 self.wait_for_Property(E_Locator.Add_using_IP_Address_name)
                 self.click(E_Locator.Add_using_IP_Address_name)
                 print("Add Using IP Address Button Click Success")
-                self.send_keys(E_Locator.IP_address_Or_host_Name, get_data_from_inputs("printer_ip"))
+                self.send_keys(E_Locator.IP_address_Or_host_Name, get_data_from_json("printer_ip"))
                 keyboard.press(Key.enter)
                 time.sleep(2)
             self.wait_for_Property(E_Locator.Online_name)
@@ -178,56 +186,59 @@ class HP_Smart_Test(Base_Class):
             self.sign_out()
             assert False
 
-
-def install_driver(self):
-    try:
-        self.wait_for_Property(E_Locator.Printer_driver_installed_success)
-        self.click(E_Locator.Printer_driver_installed_success)
-        time.sleep(30)
-        # elements = driver.find_elements(AppiumBy.NAME, "Continue")
-        elements = self.find_element(E_Locator.Continue_name)
-        elements[2].click()
-        self.wait_for_Property(E_Locator.App_Setting_Name)
-        print("Printer Onboarded Successfully on HP Smart APP!")
-    except Exception as e:
-        time.sleep(10)
-        keyboard.press(Key.tab)
-        time.sleep(2)
-        keyboard.press(Key.tab)
-        time.sleep(2)
-        keyboard.press(Key.tab)
-        time.sleep(2)
-        keyboard.press(Key.tab)
-        time.sleep(2)
-        keyboard.press(Key.tab)
-        self.wait_for_Property(E_Locator.Printer_and_scanner)
-        self.click(E_Locator.Printer_and_scanner)
-        time.sleep(10)
-        print("Working with printer-driver flow-1")
-        self.wait_for_Property(E_Locator.Close_Setting)
-        self.click(E_Locator.Close_Setting)
-        # Attempt to close the Settings app
-        self.close_settings_app()
-        time.sleep(10)
-        self.wait_for_Property(E_Locator.Continue_name)
-        self.click(E_Locator.Continue_name)
-        self.wait_for_Property(E_Locator.App_Setting_Name)
-        print("Printer Onboarded Successfully on HP Smart APP!!")
-        time.sleep(3)
+    def install_driver(self):
         try:
-            self.wait_for_Property(E_Locator.Firmware_update)
-            # self.click(E_Locator.No_Name)
-            self.click_element(E_Locator.No_Name, 20)
+            self.wait_for_Property(E_Locator.Printer_driver_installed_success)
+            self.click(E_Locator.Printer_driver_installed_success)
+            time.sleep(30)
+            # elements = driver.find_elements(AppiumBy.NAME, "Continue")
+            elements = self.find_element(E_Locator.Continue_name)
+            elements[2].click()
+            self.wait_for_Property(E_Locator.App_Setting_Name)
+            print("Printer Onboarded Successfully on HP Smart APP!")
         except Exception as e:
-            print("Firmware Update UI does not Exist!!!")
-
-
-def close_settings_app():
-    time.sleep(3)
-    setting_menu_cmd = "Stop-Process -Name 'SystemSettings'"
-    try:
-        if subprocess.run(["powershell", "-Command", setting_menu_cmd]):
-            print(f"Windows Setting Menu Closed successfully")
+            time.sleep(10)
+            keyboard.press(Key.tab)
             time.sleep(2)
-    except Exception as e:
-        print(f"Failed to Close the Windows Setting Menu")
+            keyboard.press(Key.tab)
+            time.sleep(2)
+            keyboard.press(Key.tab)
+            time.sleep(2)
+            keyboard.press(Key.tab)
+            time.sleep(2)
+            keyboard.press(Key.tab)
+            self.wait_for_Property(E_Locator.Printer_and_scanner)
+            self.click(E_Locator.Printer_and_scanner)
+            time.sleep(10)
+            print("Working with printer-driver flow-1")
+            self.wait_for_Property(E_Locator.Close_Setting)
+            self.click(E_Locator.Close_Setting)
+            # Attempt to close the Settings app
+            self.close_settings_app()
+            time.sleep(10)
+            self.wait_for_Property(E_Locator.Continue_name)
+            self.click(E_Locator.Continue_name)
+            self.wait_for_Property(E_Locator.App_Setting_Name)
+            print("Printer Onboarded Successfully on HP Smart APP!!")
+            time.sleep(3)
+            try:
+                self.wait_for_Property(E_Locator.Firmware_update)
+                # self.click(E_Locator.No_Name)
+                self.click_element(E_Locator.No_Name, 20)
+            except Exception as e:
+                print("Firmware Update UI does not Exist!!!")
+
+    def close_settings_app(self):
+        time.sleep(3)
+        setting_menu_cmd = "Stop-Process -Name 'SystemSettings'"
+        try:
+            if subprocess.run(["powershell", "-Command", setting_menu_cmd]):
+                print(f"Windows Setting Menu Closed successfully")
+                time.sleep(2)
+        except Exception as e:
+            print(f"Failed to Close the Windows Setting Menu")
+
+    def remove_printer_on_Dashboard(self):
+        time.sleep(5)
+        self.wait_for_Property(E_Locator.Title_Hamburger_Button)
+        self.wait_for_object(E_Locator.Title_Hamburger_Button, 20)

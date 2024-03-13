@@ -9,14 +9,12 @@ class Test_Onboarding_HP_Smart:
 
         # calling page object/test login page.py
         self.comUti = HP_Smart_Test(self.driver)
-        # self.comUti.welcome_page()
+        # uninstall_app(get_data_from_json("app_name"))
+        self.comUti.welcome_page()
         self.comUti.signin()
-        # self.comUti.add_printer()
+        self.comUti.add_printer()
+        # self.comUti.install_driver()
         # self.comUti.hp_smart_sign_out()
-        # self.basAct.remove_printer_driver_settings()
-        # self.basAct.uninstall_app()
-        # self.basAct.install_app_store()
-        # uninstall_app(get_data_from_inputs("app_name"))
-        # install_app_store(get_data_from_inputs("app_id"))
+        # install_app_store(get_data_from_json("app_id"))
 
 

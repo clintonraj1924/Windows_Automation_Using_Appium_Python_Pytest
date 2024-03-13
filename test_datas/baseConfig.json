@@ -1,0 +1,7 @@
+{
+      "url": "http://127.0.0.1:4723/wd/hub",
+      "cap":  {
+        "platformName": "Windows",
+        "app": "AD2F1837.HPPrinterControl_v10z8vjag6ke6!AD2F1837.HPPrinterControl"
+      }
+}

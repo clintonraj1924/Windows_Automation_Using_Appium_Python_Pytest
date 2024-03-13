@@ -1,12 +1,6 @@
 import subprocess
-from Utilites.base_class import Base_Class
-from Utilites.base_class import get_data_from_inputs
+import json
 
-
-# class Basic_Actions(Base_Class):
-#     def __init__(self, driver):
-#         super().__init__(driver)
-#         self.driver = driver
 
 def remove_printer_driver_settings(driver_name):
     # PowerShell command to uninstall an app
@@ -46,9 +40,9 @@ def install_app_store(app_id):
         print(f"An Error occurred during App install!!!")
         assert False
 
-# Example usage
-# app_id = "9WZDNCRFHWLH"
-# app_name = "HP Smart"
-# install_app_store(app_id)
-# def close_HP_Smart_App(self):
-#     self.
+
+def get_data_from_json(key_data):
+    file_path = 'Utilites\\commonData.json'
+    with open(file_path, 'r') as file:
+        data = json.load(file)
+    return data[key_data]

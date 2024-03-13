@@ -1,19 +1,11 @@
 import inspect
 import time
-import json
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC, expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-from Utilites.exception_handling import *
+from Page_Object.basic_actions import *
 # from Utilites.pytest_logger import SingletonLogger
-
-
-def get_data_from_inputs(key_data):
-    file_path = 'Utilites\\commonData.json'
-    with open(file_path, 'r') as file:
-        data = json.load(file)
-    return data[key_data]
 
 
 class Base_Class:
@@ -41,7 +33,7 @@ class Base_Class:
         self.wait.until((EC.presence_of_element_located(by_locator))).send_keys(value)
 
     def send_keys_json(self, by_locator, data_key):
-        self.wait.until((EC.presence_of_element_located(by_locator))).send_keys(get_data_from_inputs(data_key))
+        self.wait.until((EC.presence_of_element_located(by_locator))).send_keys(get_data_from_json(data_key))
 
     def send_keys_xl_related(self, by_locator, value):
         self.wait.until((EC.visibility_of_element_located(by_locator))).clear()
@@ -83,18 +75,18 @@ class Base_Class:
         except Exception as ee:
             pass
 
-    '''def wait_for_object(self, locator, timeout=None):
-        self.log_my_keyword_name_and_arguments()
+    def wait_for_object(self, locator, timeout=None):
+        # self.log_my_keyword_name_and_arguments()
         if timeout is None:
             timeout = self.basic_wait_time
         WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(locator))
 
     def get_web_element(self, locator):
-        self.log_my_keyword_name_and_arguments()
+        # self.log_my_keyword_name_and_arguments()
         element = self.driver.find_element(locator[0], locator[1])
         return element
 
-    def log_my_keyword_name_and_arguments(self):
+    '''def log_my_keyword_name_and_arguments(self):
         """ This function is used to collect the variable name and arguments to log in logging """
         """ To get function name """
         current_frame = inspect.currentframe()
@@ -158,9 +150,10 @@ class Base_Class:
         else:
             self.logger.logger.info("Element clicked using value attribute presents in the object")
             locator = (By.XPATH, "//*[@value='{}']".format(text))
-        self.click_me(locator)
+        # self.click_me(locator)
+        self.click(locator)'''
 
-    def element_displayed(self, locator, timeout=None):
+    '''def element_displayed(self, locator, timeout=None):
         # self.log_my_keyword_name_and_arguments()
         if timeout is None:
             timeout = self.basic_wait_time
@@ -176,13 +169,13 @@ class Base_Class:
                 print(str(err))
                 self.logger.logger.debug(
                     f"element_displayed called \n locator: {locator} > locator not available in the web page")
-                return False
+                return False'''
 
-    def scroll_element_into_view(self, locator):
-        self.log_my_keyword_name_and_arguments()
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", self.get_web_element(locator))
+    '''def scroll_element_into_view(self, locator):
+        # self.log_my_keyword_name_and_arguments()
+        self.driver.execute_script("arguments[0].scrollIntoView(true);", self.get_web_element(locator))'''
 
-    def select_default_frame(self):
+    '''def select_default_frame(self):
         self.log_my_keyword_name_and_arguments()
         self.driver.switch_to.default_content()
 
